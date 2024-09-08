@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Information</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #device-info {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+    <h1>hello</h1>
+  <div id="device-info"></div>
+  <div id="gpu-info"></div>
+<script>
+  // Read text from clipboard
+navigator.clipboard.readText()
+  .then(text => console.log("Clipboard contents:", text))
+  .catch(err => console.error("Error:", err));
+</script>
+</body>
+</html>

