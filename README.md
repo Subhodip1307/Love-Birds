@@ -9,7 +9,7 @@
 
 ## Overview
 
-"Love Birds" is a Python-based project using FastAPI that allows you to grab the target's location and take a picture using their front camera just by sending them a link. It serves as a learning tool for understanding web APIs, Python, and networking, cyber awareness.
+"Love Birds" is a Python-based project using FastAPI that allows you to grab the target's location, target device info and take a picture using their front camera just by sending them a link. It serves as a learning tool for understanding web APIs, Python, and networking, cyber awareness.
 
 ## Features
 - Provide information about target device.
@@ -136,4 +136,7 @@ cloudflared tunnel --url http://127.0.0.1:8000
 </div>
 2. This field will provide us with a shareable link.
 
-3. After successfully attack all infomation will be stored in a json file call 'data.json' 
+3. After successfully attack all infomation will be stored in a json file call 'data.json'
+
+##
+The Fontend Design is inspried from https://codepen.io/rahul-sahni/pen/eYQbJGG ,Big thanks to [Developer Rahul](https://codepen.io/rahul-sahni)
