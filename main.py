@@ -29,7 +29,7 @@ class Device(BaseModel):
 @app.get("/", response_class=HTMLResponse)
 async def show_page(request: Request):
     return templates.TemplateResponse(
-        request=request, name="test.html",)
+        request=request, name="index.html",)
 
 
 @app.post("/device_info")
